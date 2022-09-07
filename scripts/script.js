@@ -108,7 +108,7 @@ function count() {
         if (operator === '*') result = (Number(number1) * Number(number2));
         if (operator === '/') result = (Number(number1) / Number(number2));
         if (operator === '√') result = Math.pow((Number(number1)), 1 / Number(number2));
-        output.value = Math.floor(result * 200) / 200;
+        output.value = Math.floor(result * 100000) / 100000;
         number1 = result;
         resultUsedFlag = true;
         operatorFlag = true;
