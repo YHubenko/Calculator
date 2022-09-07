@@ -36,7 +36,7 @@ let resultUsedFlag = false;
 for (const key of keyboard) {
     key.addEventListener('click', () => {
         emptyFlag = false;
-        if (operatorFlag) output.value = '';
+        if (operatorFlag || resultUsedFlag) output.value = '';
         output.value += key.textContent;
         if (arrFlag) {
             arr1 = output.value.split('');
@@ -91,7 +91,12 @@ for (const operatorBtn of operatorBtnList) {
     });
 }
 let equals = document.querySelector('.equals');
-equals.addEventListener('click', count);
+equals.addEventListener('click', () => {
+    count();
+    number1 = '';
+    operatorFlag = false;
+    usedOperatorFlag = false;
+});
 
 function count() {
     if (operator !== '' && arr2 !== [] && !operatorFlag) {
@@ -103,10 +108,10 @@ function count() {
         if (operator === '*') result = (Number(number1) * Number(number2));
         if (operator === '/') result = (Number(number1) / Number(number2));
         if (operator === '√') result = Math.pow((Number(number1)), 1 / Number(number2));
-        output.value = result;
+        output.value = Math.floor(result * 200) / 200;
         number1 = result;
-        arr1 = String(result).split('');
         resultUsedFlag = true;
         operatorFlag = true;
+        operator = '';
     }
 }
