@@ -67,9 +67,11 @@ button {
     box-shadow: 3px 3px rgba(18, 24, 31, 0.89);
     letter-spacing: 2px;
 }
+
 button:hover {
     background-color: #6b7d8d;
 }
+
 button:active {
     /*width: 87%;*/
     /*height: 87%;*/
@@ -81,19 +83,22 @@ button:active {
 .btn-border {
     background-color: #0e111a;
 }
+
 .btn-border:hover {
     background-color: #202538;
 }
+
 .btn-border:active {
     background-color: #0a0c13;
 }
 
-/*input {*/
-/*    width: 98%;*/
-/*    height: 100%;*/
-/*    border: none;*/
-/*    color: #F2F3F4;*/
-/*    font-family: 'Lobster', cursive;*/
-/*    font-size: 60px;*/
-/*    letter-spacing: 5px;*/
-/*}*/
+#output {
+    width: 370px;
+    border: none;
+    color: #F2F3F4;
+    font-family: 'Lobster', cursive;
+    font-size: 45px;
+    letter-spacing: 5px;
+    direction: rtl;
+    padding: 0 15px;
+}
