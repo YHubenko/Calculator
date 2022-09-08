@@ -20,6 +20,8 @@ for (const button of buttons) {
         btn.classList.replace('key', 'operator');
     } else if (button === '=') {
         btn.classList.replace('key', 'equals');
+    } else if (button === '.') {
+        btn.classList.replace('key', 'point');
     }
 }
 
@@ -49,6 +51,17 @@ for (const key of keyboard) {
         operatorFlag = false;
     });
 }
+let point = document.querySelector('.point');
+point.addEventListener('click', () => {
+    let arr = output.value.split('');
+    let counter = 0;
+    for (const item of arr) {
+        if (item === '.') counter++;
+    }
+    if (counter === 0 && !emptyFlag && !operatorFlag && !resultUsedFlag) {
+        output.value += '.';
+    }
+})
 let clear = document.querySelector('.C');
 clear.addEventListener('click', () => {
     output.value = '';
