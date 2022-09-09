@@ -35,81 +35,57 @@ let emptyFlag = true;
 let operatorFlag = false;
 let usedOperatorFlag = false
 let resultUsedFlag = false;
-for (const key of keyboard) {
-    key.addEventListener('click', () => {
-        emptyFlag = false;
-        if (operatorFlag || resultUsedFlag) output.value = '';
-        output.value += key.textContent;
-        if (arrFlag) {
-            arr1 = output.value.split('');
-            arr1.push(Number(key.textContent));
-        } else {
-            arr2 = output.value.split('');
-            arr2.push(Number(key.textContent));
-        }
-        resultUsedFlag = false;
-        operatorFlag = false;
-    });
-}
-let point = document.querySelector('.point');
-point.addEventListener('click', () => {
-    let arr = output.value.split('');
-    let counter = 0;
-    for (const item of arr) {
-        if (item === '.') counter++;
-    }
-    if (counter === 0 && !emptyFlag && !operatorFlag && !resultUsedFlag) {
-        output.value += '.';
-    }
-})
-let clear = document.querySelector('.C');
-clear.addEventListener('click', () => {
-    output.value = '';
-    arr1 = [];
-    arr2 = [];
-    result = '';
-    operator = '';
-    arrFlag = true;
-    emptyFlag = true;
-    resultUsedFlag = false;
-    usedOperatorFlag = false;
-});
-let clearElement = document.querySelector('.CE');
-clearElement.addEventListener('click', () => {
-    let newArray = output.value.split('');
-    newArray.pop();
-    output.value = newArray.join('');
-    if (resultUsedFlag) number1 = output.value;
-})
 let operatorBtnList = document.querySelectorAll('.operator');
 let operator = '';
 let result;
 let number1;
 let number2;
-for (const operatorBtn of operatorBtnList) {
-    operatorBtn.addEventListener('click', () => {
-        if (!emptyFlag && !operatorFlag && !usedOperatorFlag) {
-            operator = operatorBtn.textContent;
-            arrFlag = false;
-            operatorFlag = true;
-            usedOperatorFlag = true;
-            result = '';
-            arr2 = [];
-            number1 = output.value;
-            console.log('Yes');
-        } else if (usedOperatorFlag) {
-            count();
-            operator = operatorBtn.textContent;
-        }
-    });
+
+for (const key of keyboard) {
+    key.addEventListener('click', () => {keyOut(key.textContent)});
 }
+document.addEventListener('keydown', (e) => {
+    if (e.key === '1' || e.key === '2' || e.key === '3' || e.key === '4' || e.key === '5' ||
+        e.key === '6' || e.key === '7' || e.key === '8' || e.key === '9' || e.key === '0') {
+        keyOut(e.key);
+    }
+})
+
+let point = document.querySelector('.point');
+point.addEventListener('click', pointOut);
+document.addEventListener('keydown', (e) => {
+    if (e.key === '.' || e.key === ',') pointOut();
+})
+
+let clear = document.querySelector('.C');
+clear.addEventListener('click', clearAll);
+
+let clearElement = document.querySelector('.CE');
+clearElement.addEventListener('click', clearE);
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Backspace') clearE();
+})
+
+for (const operatorBtn of operatorBtnList) {
+    operatorBtn.addEventListener('click', () => operation(operatorBtn.textContent));
+    document.addEventListener('keydown', (e) => {
+        if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') operation(e.key);
+    })
+}
+
 let equals = document.querySelector('.equals');
-equals.addEventListener('click', () => {
+equals.addEventListener('click', equalsResult);
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === '=') equalsResult();
+})
+
+
+function equalsResult () {
     count();
     number1 = '';
     operatorFlag = false;
     usedOperatorFlag = false;
-});
+}
 
 function count() {
     if (operator !== '' && arr2 !== [] && !operatorFlag) {
@@ -126,5 +102,66 @@ function count() {
         resultUsedFlag = true;
         operatorFlag = true;
         operator = '';
+    }
+}
+
+function keyOut(key) {
+    emptyFlag = false;
+    if (operatorFlag || resultUsedFlag) output.value = '';
+    output.value += key;
+    if (arrFlag) {
+        arr1 = output.value.split('');
+        arr1.push(Number(key));
+    } else {
+        arr2 = output.value.split('');
+        arr2.push(Number(key));
+    }
+    resultUsedFlag = false;
+    operatorFlag = false;
+}
+
+function clearE() {
+    let newArray = output.value.split('');
+    newArray.pop();
+    output.value = newArray.join('');
+    if (resultUsedFlag) number1 = output.value;
+}
+
+function clearAll() {
+    output.value = '';
+    arr1 = [];
+    arr2 = [];
+    result = '';
+    operator = '';
+    arrFlag = true;
+    emptyFlag = true;
+    resultUsedFlag = false;
+    usedOperatorFlag = false;
+}
+
+function operation(key) {
+    if (!emptyFlag && !operatorFlag && !usedOperatorFlag) {
+        operator = key;
+        arrFlag = false;
+        operatorFlag = true;
+        usedOperatorFlag = true;
+        result = '';
+        arr2 = [];
+        number1 = output.value;
+        console.log('Yes');
+    } else if (usedOperatorFlag) {
+        count();
+        operator = key;
+    }
+}
+
+function pointOut() {
+    let arr = output.value.split('');
+    let counter = 0;
+    for (const item of arr) {
+        if (item === '.') counter++;
+    }
+    if (counter === 0 && !emptyFlag && !operatorFlag && !resultUsedFlag) {
+        output.value += '.';
     }
 }
